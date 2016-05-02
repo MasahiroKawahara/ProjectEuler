@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # フィボナッチ数列の項は前の2つの項の和である. 最初の2項を 1, 2 とすれば, 最初の10項は以下の通りである.
+
 # 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 # 数列の項の値が400万以下の, 偶数値の項の総和を求めよ.
 
@@ -8,11 +9,13 @@ n2 = 2
 sum = n2
 num = n1 + n2
 
-while num <= 4000000:
-    if num%2 == 0:
-        sum += num
-    n1 = n2
-    n2 = num
-    num = n1 + n2
+while num <= 4000000
+  if num%2 == 0
+    sum += num
+  end
+  n1 = n2
+  n2 = num
+  num = n1 + n2
+end
 
-print sum
+puts sum
