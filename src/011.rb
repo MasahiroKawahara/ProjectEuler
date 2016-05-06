@@ -22,10 +22,10 @@
 
 # 上の 20×20 の格子のうち, 上下左右斜めのいずれかの方向で連続する4つの数字の積のうち最大のものはいくつか?
 
-$SEQSIZE = 4
-$HEIGHT = 20
-$WIDTH = 20
-$NUM = [
+SEQSIZE = 4
+HEIGHT = 20
+WIDTH = 20
+NUM = [
      [ 8, 2,22,97,38,15, 0,40, 0,75, 4, 5, 7,78,52,12,50,77,91, 8],
      [49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48, 4,56,62, 0],
      [81,49,31,73,55,79,14,29,93,71,40,67,53,88,30, 3,49,13,36,65],
@@ -50,11 +50,11 @@ $NUM = [
 
 def main
   max = 0
-  $HEIGHT.times{|h|
-    $WIDTH.times{|w|
+  HEIGHT.times{|h|
+    WIDTH.times{|w|
       [[0,1],[1,0],[1,1],[1,-1]].each{|dir|
         seq = get_seq(h,w,dir)
-        if seq.size == $SEQSIZE
+        if seq.size == SEQSIZE
           prod = seq.inject(:*)
           if prod > max
             max = prod
@@ -68,11 +68,11 @@ end
 
 def get_seq(m,n,dir)
   seq = []
-  (0...$SEQSIZE).each{|i|
+  (0...SEQSIZE).each{|i|
     mi = m+i*dir[0]
     ni = n+i*dir[1]
-    if mi.between?(0,$HEIGHT-1) && ni.between?(0,$WIDTH-1)
-      seq << $NUM[mi][ni]
+    if mi.between?(0,HEIGHT-1) && ni.between?(0,WIDTH-1)
+      seq << NUM[mi][ni]
     end
   }
   seq
