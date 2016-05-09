@@ -33,7 +33,7 @@ def decrypt(ws,k1,k2,k3)
   wss
 end
 
-#再頻出の文字がスペースと仮定して，暗号化の文字を求める
+#最頻出の文字がスペースと仮定して，暗号化の文字を求める
 def guess_key(wd)
   enc_sp = wd.max_by{|k,v| v}.first #暗号化後のスペースの文字コードを取得
   CODE_SP ^ enc_sp
