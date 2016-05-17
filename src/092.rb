@@ -11,66 +11,58 @@
 
 # では, 10,000,000より小さい数で89に到達する数はいくつあるか.
 
+SQ = [0,1,4,9,16,25,36,49,64,81]
 
+BOUND = 10000000 - 1
+SUM_MAX = SQ[9] * BOUND.to_s.size #BOUNDの2乗和の取りうる値の最大値
 
-SQ = {
-  0 => 0 , 
-  1 => 1 , 
-  2 => 4 , 
-  3 => 9 , 
-  4 => 16, 
-  5 => 25, 
-  6 => 36, 
-  7 => 49, 
-  8 => 64, 
-  9 => 81
-}
-BOUND = 10000000
+N_BOUND = 100000 - 1
+N_SUM_MAX = SQ[9] * N_BOUND.to_s.size #N_BOUNDの2乗和の取りうる値の最大値
 
-$digits_2_bool = {}
-$list_89 = [] #89に到達する数字のリスト
-MAX = 300 #リストに格納しておく数字の最大値
-# 0,000,000
-# 9 999 999
 def main
-  i = 0
-  (1...BOUND).each{|n| "#{n/1000 + n%1000}"}
-  puts i
-  # l = []
-  # count = 0
-  # (1...BOUND).each{|n|
-  #   l << to_digits(n).join("")
-  #   if arrive_at_89?(n)
-  #     count += 1
-  #   end
-  # }
-  # l.uniq.each{|n|
-  #   puts n
-  # }
-  # puts count
+  count = 0
+  #ハッシュ(値 P(0..SUM_MAX)  =>  P が89に到達する？)
+  h_can_arrive89 = get_hash_1(SUM_MAX)
+  #ハッシュ(数字ABXXXXX のAB以外の数字XXXXXの2乗和Q (0..N_SUM_MAX) => SQ[A]+SQ[B]+Q_SUM (1..SUM_MAX) が89に収束するような数ABの個数) 
+  h_num_arrive89 = get_hash_2(N_SUM_MAX, h_can_arrive89)
+  #5桁以下の数字XXXXXについて，数字ABXXXXX が89に収束するような数字AB の個数をcount に加算
+  (0..N_BOUND).each{|x|
+    q = sum_digit_sqrt(x)
+    count += h_num_arrive89[q]
+  }
+  puts count
+end
+
+def get_hash_1(bound)
+  h = {}
+  (0..bound).each{|n|
+    h[n] = arrive_at_89?(n)
+  }
+  h
+end
+
+def get_hash_2(bound, hash1)
+  h = {}
+  (0..bound).each{|q|
+    h[q] = (0..99).count{|i| hash1[sum_digit_sqrt(i) + q]}
+  }
+  h
 end
 
 def arrive_at_89?(n)
   case n
   when 89
-    if n <= MAX
-      $list_89 << n
-    end
     true
-  when 1
+  when 0,1
     false
   else
-    nn = n.to_s.split("").map{|s| SQ[s.to_i]}.inject(:+)
-    if $list_89.include?(nn)
-      true
-    else
-      arrive_at_89?(nn)
-    end
+    nn = sum_digit_sqrt(n)
+    arrive_at_89?(nn)
   end
 end
 
-def to_digits(n)
-  n.to_s.split("").map{|s| s.to_i}.select{|i| i!=0}.sort
+def sum_digit_sqrt(n)
+  n.to_s.split("").map{|s| SQ[s.to_i]}.inject(:+)
 end
 
 main
