@@ -27,7 +27,7 @@ def main
   h_num_arrive89 = get_hash_2(N_SUM_MAX, h_can_arrive89)
   #5桁以下の数字XXXXXについて，数字ABXXXXX が89に収束するような数字AB の個数をcount に加算
   (0..N_BOUND).each{|x|
-    q = sum_digit_sqrt(x)
+    q = sum_digit_square(x)
     count += h_num_arrive89[q]
   }
   puts count
@@ -44,7 +44,7 @@ end
 def get_hash_2(bound, hash1)
   h = {}
   (0..bound).each{|q|
-    h[q] = (0..99).count{|i| hash1[sum_digit_sqrt(i) + q]}
+    h[q] = (0..99).count{|i| hash1[sum_digit_square(i) + q]}
   }
   h
 end
@@ -56,12 +56,12 @@ def arrive_at_89?(n)
   when 0,1
     false
   else
-    nn = sum_digit_sqrt(n)
+    nn = sum_digit_square(n)
     arrive_at_89?(nn)
   end
 end
 
-def sum_digit_sqrt(n)
+def sum_digit_square(n)
   n.to_s.split("").map{|s| SQ[s.to_i]}.inject(:+)
 end
 
