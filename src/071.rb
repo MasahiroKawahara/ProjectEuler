@@ -16,11 +16,7 @@ end
 
 #3/7 に最も近い既約分数n/d (n/d < 3/7)を返す．
 def get_nearest_simple_frac(d)
-  n = d*3/7
-  while 7*n < 3*d #  = Rational(n,d) < 3/7r
-    n += 1
-  end
-  n -= 1
+  n = d%7 == 0 ? d*3/7 - 1 : d*3/7
   while gcd(d,n) != 1
     n -= 1
   end

@@ -10,7 +10,7 @@ def main()
   (100..999).each{|m|
     (m..999).each{|n|
       p = m*n
-      if p > maxP && isPalindrome(p)
+      if p > maxP && is_palindrome(p)
         maxM, maxN, maxP = m, n, p
       end
     }
@@ -19,7 +19,7 @@ def main()
   puts maxP
 end
 
-def isPalindrome(num)
+def is_palindrome(num)
   ns = num.to_s
   ns == ns.reverse
 end
