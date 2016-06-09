@@ -19,8 +19,7 @@ def main
     elsif sum_digit(p)%3 == 2 && p != 5  && p != 2
       primes_2 << p
     end
-  }
-  
+  }  
   pairs_1 = {}
   primes_1.combination(2){|m,n|
     if prime_pair?(m,n)

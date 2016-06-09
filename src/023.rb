@@ -16,7 +16,7 @@ def main
   #過剰数のリストの取得
   abundants = (MIN..BOUND).select{|n| n < get_divisors_sum(n)}
   #2つの過剰数の和で表せない正の整数の総和を求める．
-  num_hash = Hash[*(1..BOUND).map{|n| [n,:non_abund_sum]}.flatten]
+  num_hash = (1..BOUND).map{|n| [n,:non_abund_sum]}.to_h
   abundants.size.times{|x|
     (x...abundants.size).each{|y|     
       num_hash[abundants[x]+abundants[y]] = :abund_sum
